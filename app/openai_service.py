@@ -3,6 +3,9 @@ from fastapi import HTTPException
 import os
 from dotenv import load_dotenv
 
+'''
+This service handles all calls to OpenAI regarding translation and summarization using gpt-3.5-turbo for low cost
+'''
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")

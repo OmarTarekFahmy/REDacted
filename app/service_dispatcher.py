@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-import sanitizer, openai_service
+import sanitizer, openai_service, email_alert
 
 
 '''
@@ -7,7 +7,7 @@ This is a middle layer between the FastAPI app and the services. It sanitizes th
 correct service based on the type.
 '''
 
-async def process(data):
+async def process(data, user_ip):
     
     # Obtain type and text
     type = data.get("type", "")
@@ -19,6 +19,9 @@ async def process(data):
     
     # Sanitize Text
     sanitized_text = sanitizer.sanitize_all(text)
+
+    if text != sanitized_text:
+        email_alert.send_alert_email(user_ip)
 
 
     # Match against each type and route to corresponding service. General type does not require routing since text has been sanitized 

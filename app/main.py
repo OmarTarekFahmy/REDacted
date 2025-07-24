@@ -15,10 +15,10 @@ app = FastAPI()
 
 @app.post("/")
 async def trigger(request: Request):
-
-
+ 
+    user_ip = request.client.host
     data = await request.json()
-    data = await service_dispatcher.process(data)
+    data = await service_dispatcher.process(data, user_ip)
 
     return JSONResponse(data)
 

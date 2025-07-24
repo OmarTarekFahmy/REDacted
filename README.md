@@ -95,7 +95,7 @@ curl -X POST "http://localhost:8000/" \
 -H "Content-Type: application/json" \
 -d '{
   "type": "translate",
-   "target_language": "French",
+  "target_language": "French",
   "text": "Hello, how are you?"
 }'
 ```

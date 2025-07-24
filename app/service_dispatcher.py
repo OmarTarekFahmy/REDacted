@@ -33,10 +33,9 @@ async def process(data, user_ip):
         
         case "summarize":
 
-            summarized_text = openai_service.summarize(text)
-            sanitized_summarized_text = sanitizer.sanitize_all(summarized_text)
+            summarized_text = openai_service.summarize(sanitized_text)
             data.pop("text")
-            data["summarized_text"] = sanitized_summarized_text
+            data["summarized_text"] = summarized_text
             
             return data            
         case "translate":

@@ -29,8 +29,13 @@ async def process(data):
             return data
         
         case "summarize":
-            #Call to OpenAI to summarize
-            pass
+
+            summarized_text = openai_service.summarize(text)
+            sanitized_summarized_text = sanitizer.sanitize_all(summarized_text)
+            data.pop("text")
+            data["summarized_text"] = sanitized_summarized_text
+            
+            return data            
         case "translate":
             target_language = data.get("target_language", "")
 
@@ -38,14 +43,12 @@ async def process(data):
                 raise HTTPException(400, "Target language must not be empty when translating.")
             
             translated_text = openai_service.translate(sanitized_text, target_language)
-            print(translated_text)
 
             data.pop("text")
             data["translated_text"] = translated_text
             
             return data
 
-            #Call to OpenAI to translate
             pass
         case _:
             raise HTTPException(400, "Bad Type")

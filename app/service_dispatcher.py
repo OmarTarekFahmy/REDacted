@@ -1,0 +1,51 @@
+from fastapi import HTTPException
+import sanitizer, openai_service
+
+
+'''
+This is a middle layer between the FastAPI app and the services. It sanitizes the text (always done) and routes the JSON to the 
+correct service based on the type.
+'''
+
+async def process(data):
+    
+    # Obtain type and text
+    type = data.get("type", "")
+    text = data.get("text", "")
+
+    # Raise HTTP Exception if either is empty
+    if not type or not text:
+        raise HTTPException(400, "Type and Text fields cannot be empty.")
+    
+    # Sanitize Text
+    sanitized_text = sanitizer.sanitize_all(text)
+
+
+    # Match against each type and route to corresponding service. General type does not require routing since text has been sanitized 
+    match type:
+        case "general":
+            data.pop("text")
+            data["sanitized_text"] = sanitized_text
+            return data
+        
+        case "summarize":
+            #Call to OpenAI to summarize
+            pass
+        case "translate":
+            target_language = data.get("target_language", "")
+
+            if not target_language:
+                raise HTTPException(400, "Target language must not be empty when translating.")
+            
+            translated_text = openai_service.translate(sanitized_text, target_language)
+            print(translated_text)
+
+            data.pop("text")
+            data["translated_text"] = translated_text
+            
+            return data
+
+            #Call to OpenAI to translate
+            pass
+        case _:
+            raise HTTPException(400, "Bad Type")

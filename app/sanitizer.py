@@ -1,10 +1,11 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import Response, JSONResponse
 import spacy
 import re
 
 
-app = FastAPI()
+'''
+This is a service layer used to sanitize sensitive information
+'''
+
 nlp = spacy.load("en_core_web_sm")
 
 
@@ -42,24 +43,3 @@ def sanitize_all(text: str):
     text = sanitize_names(text)
     text = sanitize_regex(text)
     return text
-
-
-@app.post("/sanitize")
-async def sanitization_endpoint(request: Request):
-
-    data = await request.json()
-
-    original_text = data.get("Text", "")
-    print(original_text)
-
-    sanitized_text = sanitize_all(original_text)
-
-    data.pop("Text", None)
-    data['sanitized_text'] = sanitized_text
-
-    print(sanitized_text)
-
-    return JSONResponse(content=data)   
-
-    
-

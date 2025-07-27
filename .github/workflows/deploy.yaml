@@ -29,18 +29,18 @@ jobs:
             git fetch origin main && git reset --hard origin/main
 
             echo "▶ 3) Stop & remove old container"
-            docker stop redacted-container || true
-            docker rm   redacted-container || true
+            sudo docker stop redacted-container || true
+            sudo docker rm   redacted-container || true
 
             echo "▶ 4) Remove old image"
-            docker rmi redacted || true
+            sudo docker rmi redacted || true
 
             echo "▶ 5) Build new image"
-            docker build -t redacted .
+            sudo docker build -t redacted .
 
             echo "▶ 6) Start container"
             cd app
-            docker run -d \
+            sudo docker run -d \
               --restart unless-stopped \
               --env-file .env \
               -p 8000:8000 \

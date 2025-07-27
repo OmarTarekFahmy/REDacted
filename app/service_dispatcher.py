@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-import sanitizer, openai_service, email_alert
+from app import sanitizer, openai_service, email_alert
 
 
 '''

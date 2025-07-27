@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, HTMLResponse
-import  service_dispatcher
+from app import service_dispatcher
 from fastapi.middleware.cors import CORSMiddleware
 
 

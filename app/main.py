@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 import  service_dispatcher
 
 '''
@@ -34,5 +34,11 @@ async def test():
  
     retData = {"response": "Hello from server"}
     return retData
+
+from fastapi.responses import HTMLResponse
+
+@app.get("/", response_class=HTMLResponse)
+async def test():
+    return "<h1>Hello from server</h1>"
 
 

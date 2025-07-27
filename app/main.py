@@ -27,7 +27,7 @@ async def trigger(request: Request):
 async def test():
  
     retData = {"response": "Hello from server"}
-    return JSONResponse(retData)
+    return "Test String"
 
 
 

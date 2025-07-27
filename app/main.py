@@ -23,5 +23,11 @@ async def trigger(request: Request):
     return JSONResponse(data)
 
 
-    
+@app.get("/")
+async def test():
+ 
+    retData = {"response": "Hello from server"}
+    return JSONResponse(retData)
+
+
 

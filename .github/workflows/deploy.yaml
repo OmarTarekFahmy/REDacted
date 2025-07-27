@@ -48,8 +48,8 @@ jobs:
               redacted
 
             echo "▶ 7) Start frontend"
-            pkill -f "http.server"
+            pkill -f "http.server" || echo "No running server"
             cd ../frontend
-            python3 -m http.server 8080
+            nohup python3 -m http.server 8080
 
             

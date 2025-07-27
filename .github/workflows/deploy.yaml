@@ -46,3 +46,9 @@ jobs:
               -p 8000:8000 \
               --name redacted-container \
               redacted
+
+            echo "▶ 7) Start frontend"
+            cd ../frontend
+            python3 -m http.server 8080
+
+            

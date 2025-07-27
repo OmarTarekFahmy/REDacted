@@ -41,6 +41,5 @@ from fastapi.responses import HTMLResponse
 async def test():
     return "<h1>Hello from server</h1>"
 
-#Comment  
 
 

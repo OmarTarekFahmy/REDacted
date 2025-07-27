@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text Processor</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: #f7f7f7;
+    }
+    .container {
+        display: flex;
+        width: 80%;
+        max-width: 1000px;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border-radius: 8px;
+    }
+    .left, .right {
+        flex: 1;
+        padding: 10px;
+    }
+    .left {
+        border-right: 1px solid #ddd;
+    }
+    textarea {
+        width: 100%;
+        height: 150px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: none;
+        font-size: 14px;
+    }
+    select, button {
+        padding: 8px 12px;
+        font-size: 14px;
+        margin-right: 10px;
+    }
+    button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    .response-box {
+        background: #f0f0f0;
+        padding: 10px;
+        border-radius: 4px;
+        min-height: 150px;
+        white-space: pre-wrap;
+        font-size: 14px;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <textarea id="inputText" placeholder="Enter your text here..."></textarea><br>
+            <select id="actionType">
+                <option value="Translate">Translate</option>
+                <option value="Summarize">Summarize</option>
+                <option value="General">General</option>
+            </select>
+            <button onclick="sendRequest()">Submit</button>
+        </div>
+        <div class="right">
+            <h3>Response:</h3>
+            <div class="response-box" id="responseBox">Waiting for response...</div>
+        </div>
+    </div>
+
+<script>
+    async function sendRequest() {
+        const text = document.getElementById("inputText").value.trim();
+        const type = document.getElementById("actionType").value;
+        const responseBox = document.getElementById("responseBox");
+
+        if (!text) {
+            alert("Please enter some text.");
+            return;
+        }
+
+        const payload = {
+            type: type,
+            text: text,
+            target_language: "english"
+        };
+
+        responseBox.textContent = "Sending request...";
+
+        try {
+            const response = await fetch("http://3.124.194.160:8000/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            responseBox.textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+            responseBox.textContent = "Request failed: " + error.message;
+        }
+    }
+</script>
+</body>
+</html>

@@ -19,7 +19,7 @@ def translate(text: str, target_language: str) -> str:
 
     try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",  # Cheapest general-purpose chat model
+            model="gpt-4.1-mini",  # Cheapest general-purpose chat model
             messages=[
                 {"role": "system", "content": "You are a professional translator. Respond only with the translated text."},
                 {"role": "user", "content": prompt}

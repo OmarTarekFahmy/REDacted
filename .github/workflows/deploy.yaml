@@ -48,6 +48,7 @@ jobs:
               redacted
 
             echo "▶ 7) Start frontend"
+            pkill -f "http.server"
             cd ../frontend
             python3 -m http.server 8080
 

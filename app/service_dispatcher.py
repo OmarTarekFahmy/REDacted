@@ -10,8 +10,8 @@ correct service based on the type.
 async def process(data, user_ip):
     
     # Obtain type and text
-    type = data.get("type", "")
-    text = data.get("text", "")
+    type = data.get("type", "").lower()
+    text = data.get("text", "").lower()
 
     # Raise HTTP Exception if either is empty
     if not type or not text:

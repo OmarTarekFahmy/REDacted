@@ -86,6 +86,7 @@
     async function sendRequest() {
         const text = document.getElementById("inputText").value.trim();
         const type = document.getElementById("actionType").value;
+        
         const responseBox = document.getElementById("responseBox");
 
         if (!text) {
@@ -96,7 +97,7 @@
         const payload = {
             type: type,
             text: text,
-            target_language: "english"
+            target_language: "arabic"
         };
 
         responseBox.textContent = "Sending request...";

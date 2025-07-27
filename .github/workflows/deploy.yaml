@@ -50,6 +50,6 @@ jobs:
             echo "▶ 7) Start frontend"
             pkill -f "http.server" || echo "No running server"
             cd ../frontend
-            python3 -m http.server 8080 & disown
+            nohup python3 -m http.server 8080 & disown
 
             

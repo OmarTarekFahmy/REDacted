@@ -1,6 +1,9 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, HTMLResponse
 import  service_dispatcher
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 '''
 This is the FastAPI app. It includes a single endpoint at path "/". This endpoint handles all requests by sending the data to
@@ -11,6 +14,20 @@ This data is then returned to main.py and returned as the JSON response.
 '''
 
 app = FastAPI()
+
+# Allow requests from your frontend (adjust port if different)
+origins = [
+    "http://localhost:8080",  # Vite default port
+    "http://127.0.0.1:8080",  # Also valid
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or ["*"] to allow all
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.post("/")
